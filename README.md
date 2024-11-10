@@ -1,7 +1,4 @@
 # OneLink Project
-
-![logo](https://via.placeholder.com/600x200.png?text=OneLink+Edu+Logo)
-
 ---
 
 ### 🚀 О проекте
