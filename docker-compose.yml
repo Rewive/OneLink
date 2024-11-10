@@ -1,0 +1,50 @@
+services:
+  courses:
+    container_name: courses-dev
+    image: courses-dev:1.0.0
+    build:
+      context: ./OneLink-edu.back-end
+      dockerfile: Dockerfile
+    command: npm run start:debug
+    ports:
+      - "3001:3001"
+    networks:
+      - server-network
+    volumes:
+      - ./OneLink-edu.back-end:/newfolder
+      - /newfolder/node_modules
+    restart: unless-stopped
+
+  conferences:
+    container_name: conferences-dev
+    image: conferences-dev:1.0.0
+    build:
+      context: ./one-link-stream.back-end
+      dockerfile: Dockerfile
+    command: npm run start:debug
+    ports:
+      - "3000:3000"
+    networks:
+      - server-network
+    volumes:
+      - ./one-link-stream.back-end:/app
+      - /app/node_modules
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13
+    container_name: server-postgres
+    environment:
+      POSTGRES_USER: lmentor
+      POSTGRES_PASSWORD: 2i8xjsy62hGDb23
+      POSTGRES_DB: mentordb
+    networks:
+      - server-network
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+networks:
+  server-network:
